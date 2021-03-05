@@ -1,0 +1,11 @@
+namespace gendev.bot.runner.umple;
+
+external AbstractBot{};
+
+class BotImpl {
+  isA AbstractBot;
+  
+  state {
+    // add states here
+  }
+}

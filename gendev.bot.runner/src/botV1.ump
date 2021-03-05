@@ -1,0 +1,17 @@
+namespace gendev.bot.runner.umple;
+
+external AbstractBot{};
+
+class BotImpl {
+  isA AbstractBot;
+  
+  state {
+  	Going {
+  	  obstacle -> / {turn();} Turning ;
+  	}
+
+  	Turning {
+  	  clear -> / {go();} Going;
+  	}
+  }
+}

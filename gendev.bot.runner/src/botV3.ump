@@ -1,0 +1,35 @@
+namespace gendev.bot.runner.umple;
+
+external AbstractBot{};
+
+class BotImpl {
+  isA AbstractBot;
+  
+  state {
+
+	NormalOperation {
+	  	Going {
+	  	  obstacle -> / {turn();} Turning ;
+	  	  doWork -> Working;
+	  	}
+
+	  	Turning {
+	  	  clear -> / {go();} Going;
+	  	  doWork -> Working;
+	  	}
+
+	  	Working {
+	  	  entry / {stop();}
+	  	  do {beep();}
+	  	  doneWorking -> / {turn();} Going;
+	  	}
+
+	  	emgStop -> Emergency;
+  	}
+
+  	Emergency {
+  	  entry / {stop();}
+  	  releaseEmgStop -> / {go();} NormalOperation;
+  	}
+  }
+}
