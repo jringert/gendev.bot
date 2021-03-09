@@ -54,16 +54,6 @@ public class RobotRunnerGui extends JPanel implements ActionListener {
 		return gui;
 	}
 
-	/**
-	 * main method to try the GUI (not connected to functionality of HTTP server --
-	 * run RobotRunner instead
-	 * 
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		createAndShowGUI();
-	}
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if ("work".equals(e.getActionCommand())) {
