@@ -1,4 +1,4 @@
-# Eclips project gendev.bot.runner
+# Eclipse project gendev.bot.runner
 Project for executing some engine for generated code and making it available for the robot to connect to via HTTP.
 
 Currently supported engines:
