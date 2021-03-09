@@ -3,8 +3,8 @@
 #include <ESP8266WiFi.h>
 
 #include <ESP8266HTTPClient.h>
-#include <ArduinoJson.h>
-#include <WiFiClient.h>
+#include <ArduinoJson.h> //https://arduinojson.org
+#include <WiFiManager.h> //https://github.com/tzapu/WiFiManager
 
 #define USE_MOTORS
 
@@ -13,13 +13,14 @@
 #define MOTOR_A_DIR 5  //D1 A1-B
 #define MOTOR_B_PWM 14 //D5 B-1A
 #define MOTOR_B_DIR 12 //D6 B-1B
-#define PWM_SLOW 700  // arbitrary slow speed PWM duty cycle
+#define PWM_SLOW 700  // slow speed PWM duty cycle
 #endif
 
 #define USE_USS
 
 #ifdef USE_USS
-#include <NewPing.h>
+#include <NewPing.h> //https://playground.arduino.cc/Code/NewPing/
+
 #define TRIGGER_PIN  0 //D3 // SHOULD NOT BE USED -- fails to boot sometimes
 #define ECHO_PIN     2 //D4 // SHOULD NOT BE USED -- fails to boot sometimes and prints garbage
 #define MAX_DISTANCE 100 // Maximum distance
@@ -36,9 +37,15 @@ void setup() {
 
   Serial.begin(115200);
 
+  // create a portal if cannot connect to previous AP
   WiFi.mode(WIFI_STA);
-  WiFi.setAutoReconnect(true);
-  WiFi.begin("TODO SSID name of WiFi", "TODO WiFi password");
+  WiFiManager wm;
+  if(!wm.autoConnect("GendevBotAP")) {
+    Serial.println("Failed to connect");
+    ESP.restart();
+  } else {
+    Serial.println("connected");
+  }
   
   #ifdef USE_MOTORS
   pinMode( MOTOR_B_DIR, OUTPUT );
