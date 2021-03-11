@@ -2,6 +2,7 @@
 Code to flash on the NodeMCU compatible ESP8266.
 
 Requires to install ESP8266 boards in Arduino IDE.
+* Select `File > Preferences` under `Additional Boards Manager URLs` add `http://arduino.esp8266.com/stable/package_esp8266com_index.json`
 * Select `Tools > Board: ... > Boards manager` type `esp8266` and click `install`
 
 Requires the following libraries.
