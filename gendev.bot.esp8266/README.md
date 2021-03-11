@@ -9,7 +9,7 @@ Requires the following libraries.
   * NewPing by Tim Eckel for ultra-sonic sensor (USS) https://playground.arduino.cc/Code/NewPing/
   * ArduinoJson by Benoit Blanchon for parsing JSON responses https://arduinojson.org
   * WifiManager by tzapu/tablatronix (a bit far down the list) https://github.com/tzapu/WiFiManager
-
+  
 ## Functionality
 * configures WiFi AP via HTTP
 * reads distance using an USS
@@ -37,6 +37,11 @@ You can also buy a kit and even save money, e.g., this [Arduino UNO robot](https
 
 The materials can be bought much cheaper on [Aliexpress](https://aliexpress.com)  if you are willing to wait that long (shipping can take anywhere from a week to a month). You might 20 GBP instead of 40 GBP.
 
+In any case you might need the following tools:
+* a soldering iron (to connect the cables to the motors and maybe to the battery pack)
+* a small screw driver to connect cables from the motors to the H-bridge
+* (optional) a hot glue gun to secure all cables
+
 ## Build instructions
 
 A [video of how to connect things](https://youtu.be/WTPfQyEEh8c) is avaiable.
@@ -44,8 +49,18 @@ A [video of how to connect things](https://youtu.be/WTPfQyEEh8c) is avaiable.
 The connections to PINs are documented in the code and shown here. Fritzing files are available in folder docs.
 ![connections ignoring VCC/GND](doc/pics/bot.png)
 
+## Code upload and first run
 
-# Hardware Extensions
+In the arduino code you have to configure the IP address of the computer that runs the Java program. This requires the ESP8266 and the computer to be on the same network (this is usually the case at home where you have a WiFi router). You might want to configure a fixed IP for the computer in your router settings. Alternatively you can create a mobile hotspot on your phone and connect the computer to it.
+
+Enter the local network IP of the computer (something like 192.168.0.1337) in the line below (ca. line 81 in [gendev.bot.esp8266.ino](gendev.bot.esp8266.ino)). You will also have to enter this IP in the Java code running on the computer.
+```c
+if (http.begin(client, "192.168.0.1337", 8080, "/robot?distance=" + String(distance), false)) {
+```
+
+Once the code is uploaded to the ESP8266 it will create a WiFi network called `GendevBotAP`. Connect to this WiFi, e.g., with your phone or computer and let the ESP8266 scan for networks. Select your network and enter the password. The ESP8266 will then reboot and connect to that network. It will immediately try to talk to the computer running the Java server.
+
+# Possible Hardware Extensions
 An easy way to extend the robot is by adding more sesor and additional motors. The ESP8266 should still have a few free pins for that.
 
 Another extension is to put a Raspberry Pi with a camera on the robot to have much more processing power onboard. In this case you can either try to replace the ESP8266 or simply connect it to the Raspberry Pi via WiFi (as in the above setting) or even USB. The Raspberry Pis are much cheaper on [The Pi Hut](https://thepihut.com/) than on Amazon:
