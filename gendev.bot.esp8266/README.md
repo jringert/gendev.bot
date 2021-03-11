@@ -42,7 +42,7 @@ The materials can be bought much cheaper on [Aliexpress](https://aliexpress.com)
 A [video of how to connect things](https://youtu.be/WTPfQyEEh8c) is avaiable.
 
 The connections to PINs are documented in the code and shown here. Fritzing files are available in folder docs.
-![connections ignoring VCC/GND](docs/pics/bot.png)
+![connections ignoring VCC/GND](doc/pics/bot.png)
 
 
 # Hardware Extensions
