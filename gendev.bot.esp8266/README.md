@@ -2,11 +2,13 @@
 Code to flash on the NodeMCU compatible ESP8266.
 
 Requires to install ESP8266 boards in Arduino IDE.
+* Select `Tools > Board: ... > Boards manager` type `esp8266` and click `install`
 
-Libraries
-* NewPing for ultra-sonic sensor (USS) https://playground.arduino.cc/Code/NewPing/
-* ArduinoJson for parsing JSON responses https://arduinojson.org
-* WifiManager https://github.com/tzapu/WiFiManager
+Requires the following libraries.
+* Select `Tools > Library Manager` and then find these libraries.
+  * NewPing by Tim Eckel for ultra-sonic sensor (USS) https://playground.arduino.cc/Code/NewPing/
+  * ArduinoJson by Benoit Blanchon for parsing JSON responses https://arduinojson.org
+  * WifiManager by tzapu/tablatronix (a bit far down the list) https://github.com/tzapu/WiFiManager
 
 ## Functionality
 * configures WiFi AP via HTTP
@@ -37,7 +39,11 @@ The materials can be bought much cheaper on [Aliexpress](https://aliexpress.com)
 
 ## Build instructions
 
-The connections to PINs are documented in the code. Photos and a description will follow soon.
+A [video of how to connect things](https://youtu.be/WTPfQyEEh8c) is avaiable.
+
+The connections to PINs are documented in the code and shown here. Fritzing files are available in folder docs.
+![connections ignoring VCC/GND](docs/pics/bot.png)
+
 
 # Hardware Extensions
 An easy way to extend the robot is by adding more sesor and additional motors. The ESP8266 should still have a few free pins for that.
