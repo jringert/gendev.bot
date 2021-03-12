@@ -51,8 +51,12 @@ public class SymbolicControllerExecutorHandler implements HttpHandler {
 			}
 			// INFO this is somewhat ugly, but simple to add additional input for the
 			// controller from the GUI
-			executor.setInputValue("emgStop", Boolean.toString(gui.isEmgStop()));
-			executor.setInputValue("work", Boolean.toString(gui.isWork()));
+			if (executor.getEnvVarNames().contains("emgStop")) {
+				executor.setInputValue("emgStop", Boolean.toString(gui.isEmgStop()));
+			}
+			if (executor.getEnvVarNames().contains("work")) {
+				executor.setInputValue("work", Boolean.toString(gui.isWork()));
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -64,6 +68,12 @@ public class SymbolicControllerExecutorHandler implements HttpHandler {
 		}
 
 		Map<String, String> sysValues = executor.getCurOutputs();
+		
+		// INFO this is somewhat ugly, but simple to handle additional output
+		if ("true".equals(sysValues.get("beep"))) {
+			gui.beep();
+		}
+		
 		return toJson(sysValues);
 	}
 

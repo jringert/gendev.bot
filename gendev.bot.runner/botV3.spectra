@@ -1,0 +1,26 @@
+import "DwyerPatterns.spectra"
+
+spec BotV3
+
+type MotorCmd = {FWD, BWD, STP};
+
+env Int(0..100) distance;
+env boolean work;
+env boolean emgStop;
+
+sys MotorCmd leftM;
+sys MotorCmd rightM;
+sys boolean beep;
+
+define forward := leftM=FWD & rightM = FWD;
+define turn := leftM=FWD & rightM = BWD;
+define tooClose := distance <= 20;
+define stop := leftM=STP & rightM = STP;
+
+asm sRespondsToP(turn, !tooClose);
+  
+gar alw tooClose implies !forward;
+gar alw (work or emgStop) implies stop;
+gar alw beep iff work;
+
+gar alwEv forward or work or emgStop;

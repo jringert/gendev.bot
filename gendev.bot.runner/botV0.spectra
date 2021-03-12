@@ -1,0 +1,9 @@
+spec BotV0
+
+type MotorCmd = {FWD, BWD, STP};
+
+sys MotorCmd leftM;
+sys MotorCmd rightM;
+
+gar ini leftM = STP & rightM = STP;
+

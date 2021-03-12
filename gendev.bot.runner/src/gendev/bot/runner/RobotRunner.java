@@ -16,7 +16,7 @@ public class RobotRunner {
 		Spectra, StateMachine
 	}
 
-	private static Engine engine = Engine.StateMachine;
+	private static Engine engine = Engine.Spectra;
 
 	/**
 	 * Starts the GUI, a webserver for the remote robot, and the selected engine

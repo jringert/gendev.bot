@@ -1,0 +1,14 @@
+/**
+ * This version is a bit naive as we might have a robot always stopping.
+ */
+spec BotV1naive
+
+type MotorCmd = {FWD, BWD, STP};
+
+sys MotorCmd leftM;
+sys MotorCmd rightM;
+env Int(0..100) distance;
+
+define forward := leftM=FWD & rightM = FWD;
+
+gar alw distance <= 20 implies next(!forward);

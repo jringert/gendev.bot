@@ -3,7 +3,11 @@ package gendev.bot.runner;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.File;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,6 +20,7 @@ public class RobotRunnerGui extends JPanel implements ActionListener {
 
 	private JButton b1;
 	private JButton b2;
+	private Clip clip;
 
 	public RobotRunnerGui() {
 		b1 = new JButton("Do Work");
@@ -76,6 +81,19 @@ public class RobotRunnerGui extends JPanel implements ActionListener {
 
 	public boolean isEmgStop() {
 		return emgStop;
+	}
+
+	public void beep() {
+		if (clip == null || !clip.isActive()) {
+			try {
+				clip = AudioSystem.getClip();
+				AudioInputStream ais = AudioSystem.getAudioInputStream(new File("beep.wav"));
+				clip.open(ais);
+				clip.start();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 }

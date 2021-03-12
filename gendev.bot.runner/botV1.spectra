@@ -1,0 +1,19 @@
+import "DwyerPatterns.spectra"
+
+spec BotV1
+
+type MotorCmd = {FWD, BWD, STP};
+
+sys MotorCmd leftM;
+sys MotorCmd rightM;
+env Int(0..100) distance;
+
+define forward := leftM=FWD & rightM = FWD;
+define turn := leftM=FWD & rightM = BWD;
+define tooClose := distance <= 20;
+
+asm sRespondsToP(turn, !tooClose);
+  
+gar alw tooClose implies next(!forward);
+
+gar alwEv forward;
