@@ -5,6 +5,8 @@ Requires to install ESP8266 boards in Arduino IDE.
 * Select `File > Preferences` under `Additional Boards Manager URLs` add `http://arduino.esp8266.com/stable/package_esp8266com_index.json`
 * Select `Tools > Board: ... > Boards manager` type `esp8266` and click `install`
 
+Some computers might require a USB driver to see the ESP8266 in Arduino IDE. See [these instructions](https://learn.sparkfun.com/tutorials/how-to-install-ch340-drivers/all).
+
 Requires the following libraries.
 * Select `Tools > Library Manager` and then find these libraries.
   * NewPing by Tim Eckel for ultra-sonic sensor (USS) https://playground.arduino.cc/Code/NewPing/
