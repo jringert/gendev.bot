@@ -2,6 +2,7 @@ package gendev.bot.runner.spectra;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -74,7 +75,11 @@ public class SymbolicControllerExecutorHandler implements HttpHandler {
 			gui.beep();
 		}
 		
-		return toJson(sysValues);
+		Map<String, String> sysValuesForEsp = new HashMap<>();
+		sysValuesForEsp.put("leftM", sysValues.get("leftM"));
+		sysValuesForEsp.put("rightM", sysValues.get("rightM"));
+		
+		return toJson(sysValuesForEsp);
 	}
 
 	protected String toJson(Map<String, String> map) {
