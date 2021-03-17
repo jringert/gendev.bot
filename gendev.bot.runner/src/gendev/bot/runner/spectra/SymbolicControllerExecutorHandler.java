@@ -16,6 +16,7 @@ import tau.smlab.syntech.executor.ControllerExecutorException;
 public class SymbolicControllerExecutorHandler implements HttpHandler {
 	private ControllerExecutor executor;
 	private RobotRunnerGui gui;
+	private long lastAnswer = 0;
 
 	public SymbolicControllerExecutorHandler(RobotRunnerGui gui) {
 		this.gui = gui;
@@ -27,7 +28,9 @@ public class SymbolicControllerExecutorHandler implements HttpHandler {
 		String requestParam = httpExchange.getRequestURI().toString().split("\\?")[1];
 
 		String json = getNextStep(requestParam);
-		System.out.println(requestParam + " -> " + json);
+		long time = System.currentTimeMillis();
+		System.out.println(requestParam + " -> " + json + " (time between requests: " + (time - lastAnswer) +"ms)");
+		lastAnswer = time;
 
 		OutputStream outputStream = httpExchange.getResponseBody();
 		httpExchange.sendResponseHeaders(200, json.length());
