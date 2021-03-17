@@ -47,7 +47,7 @@ In any case you might need the following tools:
 
 ## Build instructions
 
-A [video of how to connect things](https://youtu.be/WTPfQyEEh8c) is avaiable.
+A [video of how to connect things](https://youtu.be/WTPfQyEEh8c) is avaiable (pins D3 and D4 changed since the video, see updated sketch below).
 
 The connections to PINs are documented in the code and shown here. Fritzing files are available in folder docs.
 ![connections ignoring VCC/GND](doc/pics/bot.png)
