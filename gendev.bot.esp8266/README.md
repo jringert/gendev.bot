@@ -9,7 +9,7 @@ Some computers might require a USB driver to see the ESP8266 in Arduino IDE. See
 
 Requires the following libraries.
 * Select `Tools > Library Manager` and then find these libraries.
-  * NewPing by Tim Eckel for ultra-sonic sensor (USS) https://playground.arduino.cc/Code/NewPing/
+  * NewPing by Tim Eckel for ultra-sonic sensor (USS) https://bitbucket.org/teckel12/arduino-new-ping/wiki/Home
   * ArduinoJson by Benoit Blanchon for parsing JSON responses https://arduinojson.org
   * WifiManager by tzapu/tablatronix (a bit far down the list) https://github.com/tzapu/WiFiManager
   
