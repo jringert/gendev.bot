@@ -1,5 +1,5 @@
 #include <Arduino.h>
-//See available PINs and possible problems https://randomnerdtutorials.com/esp8266-pinout-reference-gpios/
+
 #include <ESP8266WiFi.h>
 
 #include <ESP8266HTTPClient.h>
@@ -12,7 +12,7 @@
 #define MOTOR_A_PWM 13 //D7 A-1A
 #define MOTOR_A_DIR 5  //D1 A1-B
 #define MOTOR_B_PWM 14 //D5 B-1A
-#define MOTOR_B_DIR 16 //D0 B-1B
+#define MOTOR_B_DIR 12 //D6 B-1B
 #define PWM_SLOW 700  // slow speed PWM duty cycle
 // direction of motors -1 BWD, 0 STP, 1 FWD
 int dirA = 0;
@@ -25,9 +25,11 @@ const long waitDirChange = 100;
 
 #ifdef USE_USS
 #include <NewPing.h> //https://bitbucket.org/teckel12/arduino-new-ping/wiki/Home
-#define TRIGGER_ECHO_PIN     12 //D6
+//See pin problems https://randomnerdtutorials.com/esp8266-pinout-reference-gpios/
+#define TRIGGER_PIN  0 //D3 // DISCONNECT for FLASH and BOOT
+#define ECHO_PIN     2 //D4 // DISCONNECT for FLASH and BOOT
 #define MAX_DISTANCE 100 // Maximum distance
-NewPing sonar(TRIGGER_ECHO_PIN, TRIGGER_ECHO_PIN, MAX_DISTANCE); // NewPing setup of pins and maximum distance.
+NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE); // NewPing setup of pins and maximum distance.
 #endif
 
 int distance = 0;
@@ -83,7 +85,7 @@ void loop() {
     if (WiFi.status() == WL_CONNECTED) {
       WiFiClient client;    
       Serial.printf("[HTTP] trying to begin");
-      if (http.begin(client, "TODO IP or host name", 8080, "/robot?distance=" + String(distance), false)) {
+      if (http.begin(client, "192.168.0.11", 8080, "/robot?distance=" + String(distance), false)) {
         int httpCode = http.GET();
         if (httpCode > 0) {
           if (httpCode == HTTP_CODE_OK || httpCode == HTTP_CODE_MOVED_PERMANENTLY) {

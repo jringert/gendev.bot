@@ -47,7 +47,7 @@ In any case you might need the following tools:
 
 ## Build instructions
 
-A [video of how to connect things](https://youtu.be/WTPfQyEEh8c) is avaiable (pins D3 and D4 changed since the video, see updated sketch below).
+A [video of how to connect things](https://youtu.be/WTPfQyEEh8c) is avaiable.
 
 The connections to PINs are documented in the code and shown here. Fritzing files are available in folder docs.
 ![connections ignoring VCC/GND](doc/pics/bot.png)
@@ -56,7 +56,7 @@ The connections to PINs are documented in the code and shown here. Fritzing file
 
 In the arduino code you have to configure the IP address of the computer that runs the Java program. This requires the ESP8266 and the computer to be on the same network (this is usually the case at home where you have a WiFi router). You might want to configure a fixed IP for the computer in your router settings. Alternatively you can create a mobile hotspot on your phone and connect the computer to it.
 
-Enter the local network IP of the computer (something like 192.168.0.1337) in the line below (ca. line 86 in [gendev.bot.esp8266.ino](gendev.bot.esp8266.ino)). You will also have to enter this IP in the Java code running on the computer.
+Enter the local network IP of the computer (something like 192.168.0.1337) in the line below (ca. line 88 in [gendev.bot.esp8266.ino](gendev.bot.esp8266.ino)). You will also have to enter this IP in the Java code running on the computer.
 ```c
 if (http.begin(client, "192.168.0.1337", 8080, "/robot?distance=" + String(distance), false)) {
 ```
