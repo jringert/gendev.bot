@@ -6,14 +6,18 @@
 #include <ArduinoJson.h> //https://arduinojson.org
 #include <WiFiManager.h> //https://github.com/tzapu/WiFiManager
 
-#define USE_MOTORS
+//#define USE_MOTORS
+//#define USE_USS
+#define USE_SERIAL
+
 
 #ifdef USE_MOTORS
 #define MOTOR_A_PWM 13 //D7 A-1A
 #define MOTOR_A_DIR 5  //D1 A1-B
 #define MOTOR_B_PWM 14 //D5 B-1A
 #define MOTOR_B_DIR 12 //D6 B-1B
-#define PWM_SLOW 700  // slow speed PWM duty cycle
+// next one depends a lot on battery power
+#define PWM_SLOW 1023 //700  // slow speed PWM duty cycle
 // direction of motors -1 BWD, 0 STP, 1 FWD
 int dirA = 0;
 int dirB = 0;
@@ -21,16 +25,14 @@ int dirB = 0;
 const long waitDirChange = 100;
 #endif
 
-#define USE_USS
-
 #ifdef USE_USS
-#include <NewPing.h> //https://bitbucket.org/teckel12/arduino-new-ping/wiki/Home
 //See pin problems https://randomnerdtutorials.com/esp8266-pinout-reference-gpios/
 #define TRIGGER_PIN  0 //D3 // DISCONNECT for FLASH and BOOT
 #define ECHO_PIN     2 //D4 // DISCONNECT for FLASH and BOOT
 #define MAX_DISTANCE 100 // Maximum distance
-NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE); // NewPing setup of pins and maximum distance.
 #endif
+
+
 
 int distance = 0;
 
@@ -41,19 +43,29 @@ const long interval = 50;
 HTTPClient http;
 
 void setup() {
-
+  #ifdef USE_SERIAL
   Serial.begin(115200);
+  #endif
 
   // create a portal if cannot connect to previous AP
   WiFi.mode(WIFI_STA);
   WiFiManager wm;
   if(!wm.autoConnect("GendevBotAP")) {
+    #ifdef USE_SERIAL
     Serial.println("Failed to connect");
+    #endif
     ESP.restart();
   } else {
+    #ifdef USE_SERIAL
     Serial.println("connected");
+    #endif
   }
   http.setReuse(true);
+
+  #ifdef USE_USS
+  pinMode(TRIGGER_PIN, OUTPUT);
+  pinMode(ECHO_PIN, INPUT);
+  #endif
   
   #ifdef USE_MOTORS
   pinMode( MOTOR_B_DIR, OUTPUT );
@@ -74,23 +86,40 @@ void loop() {
     previousMillis = currentMillis;
     
     #ifdef USE_USS
-    distance = sonar.ping_cm();
+    // pulse the USS
+    digitalWrite(TRIGGER_PIN, LOW);
+    delayMicroseconds(2);
+    digitalWrite(TRIGGER_PIN, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(TRIGGER_PIN, LOW);
+    // abort after 6 milliseconds ~ 100cm
+    long duration = pulseIn(ECHO_PIN, HIGH, 6000);
+    if (duration != 0) {
+      // roughly cm
+      distance = (duration / 58);
+    }
     if (distance == 0) { //(0 = outside set distance range)
       distance = MAX_DISTANCE;
     }
+    #ifdef USE_SERIAL
     Serial.println(distance);
+    #endif
     #endif
       
     // check for WiFi connection
     if (WiFi.status() == WL_CONNECTED) {
       WiFiClient client;    
+      #ifdef USE_SERIAL
       Serial.printf("[HTTP] trying to begin");
-      if (http.begin(client, "192.168.0.11", 8080, "/robot?distance=" + String(distance), false)) {
-        int httpCode = http.GET();
+      #endif
+      if (http.begin(client, "192.168.137.1", 8080, "/robot?distance=" + String(distance), false)) {        
+        int httpCode = http.GET();        
         if (httpCode > 0) {
           if (httpCode == HTTP_CODE_OK || httpCode == HTTP_CODE_MOVED_PERMANENTLY) {
             String payload = http.getString();
+            #ifdef USE_SERIAL
             Serial.println(payload);
+            #endif
             StaticJsonDocument<100> doc;
             deserializeJson(doc, payload);
                       
@@ -150,14 +179,20 @@ void loop() {
             #endif
           }
         } else {
+          #ifdef USE_SERIAL
           Serial.printf("[HTTP] GET... failed, error: %s\n", http.errorToString(httpCode).c_str());
+          #endif
         }
         http.end();
       } else {
+        #ifdef USE_SERIAL
         Serial.printf("[HTTP] Unable to connect\n");
+        #endif
       }
     } else {
+      #ifdef USE_SERIAL
       Serial.printf("[WiFi] no wifi\n");
+      #endif
       #ifdef USE_MOTORS
       stopA();
       stopB();
