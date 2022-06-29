@@ -19,9 +19,6 @@ import org.eclipse.xtext.generator.IGeneratorContext
  */
 class TurtleLangGenerator extends AbstractGenerator {
 
-  val String head = ""
-  val String tail = ""
-
   override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
     val model = resource.contents.head as Program
     fsa.generateFile(resource.deriveArduinoFileNameFor, model.doGenerateArduinoCode)
@@ -74,4 +71,69 @@ class TurtleLangGenerator extends AbstractGenerator {
       «ENDFOR»
     }
   '''
+  
+  val String head = '''
+  #include <Arduino.h>
+  
+  #define MOTOR_A_PWM 26 //A-1A
+  #define MOTOR_A_DIR 27 //A1-B
+  #define MOTOR_B_PWM 33 //B-1A
+  #define MOTOR_B_DIR 25 //B-1B
+  // next one depends a lot on battery power
+  #define PWM_SLOW 1023 //700  // slow speed PWM duty cycle
+  
+  
+  int distance = 0;
+  
+  void setup() {
+
+    pinMode( MOTOR_B_DIR, OUTPUT );
+    pinMode( MOTOR_B_PWM, OUTPUT );
+    digitalWrite( MOTOR_B_DIR, LOW );
+    digitalWrite( MOTOR_B_PWM, LOW );
+  
+    pinMode( MOTOR_A_DIR, OUTPUT );
+    pinMode( MOTOR_A_PWM, OUTPUT );
+    digitalWrite( MOTOR_A_DIR, LOW );
+    digitalWrite( MOTOR_A_PWM, LOW );
+  }
+  
+  void loop() {
+  '''
+  
+  val String tail = '''
+    // stop and wait 5 sec before going again
+    stopA();
+    stopB();
+    delay(5000);
+  }
+  
+  void forwardA() {
+    digitalWrite( MOTOR_A_DIR, HIGH ); // direction = forward
+    analogWrite( MOTOR_A_PWM, 1023-PWM_SLOW ); // PWM speed = slow
+  }
+  void forwardB() {
+    digitalWrite( MOTOR_B_DIR, HIGH ); // direction = forward
+    analogWrite( MOTOR_B_PWM, 1023-PWM_SLOW ); // PWM speed = slow
+  }
+  
+  void stopA() {
+    digitalWrite( MOTOR_A_DIR, LOW ); // direction = forward
+    digitalWrite( MOTOR_A_PWM, LOW ); // PWM speed = slow
+  }
+  void stopB() {
+    digitalWrite( MOTOR_B_DIR, LOW ); // direction = forward
+    digitalWrite( MOTOR_B_PWM, LOW ); // PWM speed = slow
+  }
+  
+  void backA() {
+    digitalWrite( MOTOR_A_DIR, LOW ); // direction = forward
+    analogWrite( MOTOR_A_PWM, PWM_SLOW ); // PWM speed = slow
+  }
+  void backB() {
+    digitalWrite( MOTOR_B_DIR, LOW ); // direction = forward
+    analogWrite( MOTOR_B_PWM, PWM_SLOW ); // PWM speed = slow
+  }
+  '''
+  
 }
