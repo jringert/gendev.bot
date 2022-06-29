@@ -1,0 +1,21 @@
+grammar gendev.bot.turtle.TurtleLang with org.eclipse.xtext.common.Terminals
+
+generate turtleLang "http://www.bot.gendev/turtle/TurtleLang"
+
+Program:
+	statement+=Statement*;
+	
+Statement:
+	Turn | Move | Repeat;
+	
+Turn:
+  dir=("right"|"left") degree=INT
+;
+
+Move:
+  dir=("forward"|"backward") steps=INT
+;
+
+Repeat:
+  "repeat" times=INT "[" statements+=Statement* "]"
+;
