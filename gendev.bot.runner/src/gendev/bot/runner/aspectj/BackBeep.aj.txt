@@ -1,0 +1,20 @@
+package gendev.bot.runner.aspectj;
+
+/**
+ * 
+ * Task 1: Make the forklift beep before it goes backwards.
+ * 
+ * Use <code>ForkLift.ev3.getAudio().systemSound(1);</code>.
+ * 
+ * @author ringert
+ *
+ */
+public privileged aspect BackBeep {
+	
+	pointcut backing(): call(void ExecutorHandler.backing());
+	
+	before() : backing() {
+		((ExecutorHandler)thisJoinPoint.getTarget()).gui.beep();
+	}
+
+}

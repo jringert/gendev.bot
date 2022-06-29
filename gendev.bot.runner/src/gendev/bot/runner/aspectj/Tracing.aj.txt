@@ -1,0 +1,21 @@
+package gendev.bot.runner.aspectj;
+
+/**
+ * Task 2: Print the method name every time a public method of DrivingImpl is
+ * called.
+ * 
+ * You can obtain the method name from the join point.
+ * 
+ * (later exclude the aspect FrontCheck)
+ * 
+ * @author ringert
+ *
+ */
+public aspect Tracing {
+
+	pointcut drivingCall() : call(private * ExecutorHandler.*()) && within(ExecutorHandler);
+	
+	after() : drivingCall() {
+		System.out.println(thisJoinPoint.getSignature().getName());
+	}
+}

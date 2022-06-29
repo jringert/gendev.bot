@@ -1,0 +1,24 @@
+package gendev.bot.runner.aspectj;
+
+/**
+ * Task 3: Before the execution of forward, let the forklift check that it is
+ * possible to proceed. If an obstacle is closer than 50cm then buzz and turn
+ * right.
+ * 
+ * @author ringert
+ *
+ */
+public privileged aspect FrontCheck {
+
+	pointcut forwarding(ExecutorHandler eh) : 
+		execution(private void ExecutorHandler.forwarding()) && 
+		this(eh);
+	
+	void around(ExecutorHandler eh) : forwarding(eh) {
+		if (eh.getDistance() < 50) {
+			eh.backing();
+		} else {
+			proceed(eh);
+		}
+	}
+}
