@@ -10,11 +10,11 @@ package gendev.bot.runner.aspectj;
  */
 public privileged aspect FrontCheck {
 
-	pointcut forwarding(ExecutorHandler eh) : 
-		execution(private void ExecutorHandler.forwarding()) && 
+	pointcut forwarding(JavaAspectExecutor eh) : 
+		execution(private void JavaAspectExecutor.forwarding()) && 
 		this(eh);
 	
-	void around(ExecutorHandler eh) : forwarding(eh) {
+	void around(JavaAspectExecutor eh) : forwarding(eh) {
 		if (eh.getDistance() < 50) {
 			eh.backing();
 		} else {

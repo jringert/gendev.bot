@@ -13,7 +13,7 @@ package gendev.bot.runner.aspectj;
  */
 public aspect Tracing {
 
-	pointcut drivingCall() : call(private * ExecutorHandler.*()) && within(ExecutorHandler);
+	pointcut drivingCall() : call(private * JavaAspectExecutor.*()) && within(JavaAspectExecutor);
 	
 	after() : drivingCall() {
 		System.out.println(thisJoinPoint.getSignature().getName());

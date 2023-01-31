@@ -2,10 +2,10 @@ package gendev.bot.runner.aspectj;
 
 public privileged aspect FrontCheck {
 
-	pointcut execFwd(ExecutorHandler eh) : 
+	pointcut execFwd(JavaAspectExecutor eh) : 
 		execution(void *.forward*(..)) && target(eh);
 	
-	void around (ExecutorHandler eh) : execFwd(eh) {
+	void around (JavaAspectExecutor eh) : execFwd(eh) {
 		if (eh.getDistance() < 50) {
 			eh.turning();
 		} else {
