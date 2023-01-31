@@ -46,9 +46,9 @@ export const blocks = Blockly.common.createBlockDefinitionsFromJsonArray([
   'message0': 'distance < %1',
   'args0': [
     {
-      'type': 'field_input',
+      'type': 'field_number',
       'name': 'DISTANCE',
-      'text': '',
+      //'text': '',
     },
   ],
   'output': null,

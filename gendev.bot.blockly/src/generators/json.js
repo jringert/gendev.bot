@@ -31,9 +31,13 @@ jsonGenerator['move'] = function(block) {
 
 jsonGenerator['dist_compare'] = function(block) {
   const value = block.getFieldValue('DISTANCE');
-  return [`distance < ${value}`, jsonGenerator.PRECEDENCE];
+  return [`getDistance() < ${value}`, jsonGenerator.PRECEDENCE];
 };
 
 jsonGenerator['emgOff_pressed'] = function(block) {
-  return ['emgOff == true', jsonGenerator.PRECEDENCE];
+  return ['isEmgOff()', jsonGenerator.PRECEDENCE];
+};
+
+jsonGenerator['doWork_pressed'] = function(block) {
+  return ['isDoWork()', jsonGenerator.PRECEDENCE];
 };
