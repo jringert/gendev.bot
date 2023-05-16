@@ -6,7 +6,6 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.Date;
 
 import gendev.bot.runner.umple.AbstractBot.MotorCmd;
 
@@ -25,7 +24,6 @@ public class ExecutorTcpHandler {
 
 	public void init(String ipAddr) throws UnknownHostException, IOException {
 		sSock = new ServerSocket(5000, 1, InetAddress.getByName(ipAddr));
-//		sSock = new ServerSocket(5000);
 	}
 
 	public void serveForever() throws IOException {
