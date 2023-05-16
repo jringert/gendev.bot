@@ -22,7 +22,7 @@ public class RobotRunner {
 		Spectra, StateMachine, Aspect, Blockly
 	}
 
-	private static Engine engine = Engine.Blockly;
+	private static Engine engine = Engine.Spectra;
 
 	/**
 	 * Starts the GUI, a webserver for the remote robot, and the selected engine
@@ -53,7 +53,9 @@ public class RobotRunner {
 			server.setExecutor(threadPoolExecutor);
 			server.start();
 		} else {
-
+			ExecutorTcpHandler h = new ExecutorTcpHandler(gui, ex);
+			h.init(HOST_IP);
+			h.serveForever();
 		}
 
 	}
