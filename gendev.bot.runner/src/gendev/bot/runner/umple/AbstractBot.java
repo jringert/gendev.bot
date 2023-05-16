@@ -1,6 +1,6 @@
 package gendev.bot.runner.umple;
 
-import java.awt.Toolkit;
+import gendev.bot.runner.RobotRunnerGui;
 
 /**
  * events of the SM:
@@ -85,7 +85,7 @@ public abstract class AbstractBot {
 	}
 
 	public void beep() {
-		Toolkit.getDefaultToolkit().beep();
+		RobotRunnerGui.instance().beep();
 	}
 
 	/*
