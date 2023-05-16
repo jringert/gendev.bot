@@ -8,19 +8,26 @@ public class BlocklyCodeExecutor extends Executor {
 	@Override
 	public void nextStep() {
 		// TODO paste generated code here
-		if (getDistance() < 3) {
-		    drive("forward");
+		if (getDistance() < 10) {
+		    drive("right");
 		} else {
-		    if (isEmgOff()) {
-		      drive("forward");
-		  } else {
-		      if (isDoWork()) {
-		        drive("forward");
-		    } else {
-		        drive("stop");
-		    }
-		  }
-		}		
+		    drive("forward");
+		}
+		
+		
+//		if (isEmgOff()) {
+//		    drive("stop");
+//		} else {
+//		    if (getDistance() < 25) {
+//		      if (getDistance() < 10) {
+//		        drive("backward");
+//		    } else {
+//		        drive("right");
+//		    }
+//		  } else {
+//		      drive("forward");
+//		  }
+//		}
 	}
 
 	private void drive(String dir) {

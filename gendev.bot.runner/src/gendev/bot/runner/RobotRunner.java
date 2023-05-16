@@ -14,9 +14,10 @@ import gendev.bot.runner.umple.StatemachineExecutor;
 
 public class RobotRunner {
 
-	public static String HOST_IP = "192.168.137.1";
+//	public static String HOST_IP = "192.168.137.1";
+	public static String HOST_IP = "192.168.1.247";
 
-	private static boolean USE_HTTP = true;
+	private static boolean USE_HTTP = false;
 
 	private enum Engine {
 		Spectra, StateMachine, Aspect, Blockly
@@ -53,7 +54,9 @@ public class RobotRunner {
 			server.setExecutor(threadPoolExecutor);
 			server.start();
 		} else {
-
+			ExecutorTcpHandler h = new ExecutorTcpHandler(gui, ex);
+			h.init(HOST_IP);
+			h.serveForever();
 		}
 
 	}
