@@ -1,11 +1,13 @@
 package gendev.bot.runner.aspectj;
 
+import gendev.bot.runner.RobotRunnerGui;
+
 public privileged aspect BackBeep {
 
-	pointcut backing(JavaAspectExecutor eh) : 
-		call(void *.backing(..)) && target(eh);
+	pointcut backing() : 
+		call(void *.backing(..)) && target(JavaAspectExecutor);
 	
-	before(JavaAspectExecutor eh) : backing(eh) {
-		eh.gui.beep();
+	before() : backing() {
+		RobotRunnerGui.instance.beep();
 	}
 }

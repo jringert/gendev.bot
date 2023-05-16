@@ -17,12 +17,14 @@ public class RobotRunnerGui extends JPanel implements ActionListener {
 	private static final long serialVersionUID = -3134321758170908129L;
 	private boolean work = false;
 	private boolean emgStop = false;
-
+	
 	private JButton b1;
 	private JButton b2;
 	private Clip clip;
 
-	public RobotRunnerGui() {
+	private static RobotRunnerGui instance;
+	
+	private RobotRunnerGui() {
 		b1 = new JButton("Do Work");
 		b1.setVerticalTextPosition(AbstractButton.CENTER);
 		b1.setHorizontalTextPosition(AbstractButton.LEADING);
@@ -40,7 +42,8 @@ public class RobotRunnerGui extends JPanel implements ActionListener {
 	}
 
 	public static RobotRunnerGui createAndShowGUI() {
-		RobotRunnerGui gui = new RobotRunnerGui();
+		instance = new RobotRunnerGui();
+		
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				// Create and set up the window.
@@ -48,15 +51,15 @@ public class RobotRunnerGui extends JPanel implements ActionListener {
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 				// Create and set up the content pane.
-				gui.setOpaque(true); // content panes must be opaque
-				frame.setContentPane(gui);
+				instance.setOpaque(true); // content panes must be opaque
+				frame.setContentPane(instance);
 
 				// Display the window.
 				frame.pack();
 				frame.setVisible(true);
 			}
 		});
-		return gui;
+		return instance;
 	}
 
 	@Override
