@@ -16,7 +16,7 @@ public class RobotRunner {
 
 	public static String HOST_IP = "192.168.137.1";
 
-	private static boolean USE_HTTP = true;
+	private static boolean USE_HTTP = false;
 
 	private enum Engine {
 		Spectra, StateMachine, Aspect, Blockly

@@ -16,7 +16,7 @@ define turn := leftM=FWD & rightM = BWD;
 define tooClose := distance <= 20;
 define stop := leftM=STP & rightM = STP;
 
-asm sRespondsToP(turn, !tooClose);
+asm S_responds_to_P_globally(!tooClose, turn);
   
 gar alw tooClose implies next(!forward);
 gar alw work implies stop;
