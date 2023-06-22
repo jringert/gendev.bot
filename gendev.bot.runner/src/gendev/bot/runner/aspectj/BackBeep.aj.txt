@@ -1,5 +1,7 @@
 package gendev.bot.runner.aspectj;
 
+import gendev.bot.runner.RobotRunnerGui;
+
 /**
  * 
  * Task 1: Make the forklift beep before it goes backwards.
@@ -8,11 +10,11 @@ package gendev.bot.runner.aspectj;
  *
  */
 public privileged aspect BackBeep {
-	
-	pointcut backing(): call(void JavaAspectExecutor.backing());
+
+	pointcut backing() : 
+		call(void *.backing(..)) && target(JavaAspectExecutor);
 	
 	before() : backing() {
-		((JavaAspectExecutor)thisJoinPoint.getTarget()).gui.beep();
+		RobotRunnerGui.instance.beep();
 	}
-
 }

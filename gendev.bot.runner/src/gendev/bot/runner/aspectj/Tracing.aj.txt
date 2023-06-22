@@ -11,11 +11,12 @@ package gendev.bot.runner.aspectj;
  * @author ringert
  *
  */
-public aspect Tracing {
+public privileged aspect Tracing {
 
-	pointcut drivingCall() : call(private * JavaAspectExecutor.*()) && within(JavaAspectExecutor);
+	pointcut callPrivateMethods() : 
+		call(private * JavaAspectExecutor.*(..)) && within(JavaAspectExecutor);
 	
-	after() : drivingCall() {
-		System.out.println(thisJoinPoint.getSignature().getName());
+	before() : callPrivateMethods() {
+		System.out.println("Calling private method: " + thisJoinPoint.getSignature().getName());
 	}
 }

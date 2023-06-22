@@ -10,7 +10,7 @@ public class JavaAspectExecutor extends Executor {
 		if (!isEmgOff()) {
 			if (getDistance() < 20) {
 				backing();
-			} else if (Math.random() > .5) {
+			} else if (Math.random() > .01) {
 				forwarding();
 			} else {
 				turning();

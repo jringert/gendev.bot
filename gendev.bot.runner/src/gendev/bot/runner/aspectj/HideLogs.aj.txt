@@ -1,0 +1,15 @@
+package gendev.bot.runner.aspectj;
+
+/**
+ * Aspect to hide the logging output that we are not sure where it comes from.
+ */
+public aspect HideLogs {
+	pointcut prints(Object out) : call(public * *.print*(..)) && target(out) && !within(gendev.bot.runner.aspectj.*);
+	
+	Object around(Object out) : prints(out) {
+		if (out != System.out) {
+			return proceed(out);
+		}
+		return null;
+	}
+}
