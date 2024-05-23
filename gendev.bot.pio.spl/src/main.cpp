@@ -3,10 +3,10 @@
 #define USE_LAPTOP // use hotspot on laptop as access point
 //#define USE_ROUTER // use router as access point
 #define TRACE // print debug messages to serial monitor
-//#define USE_MOTORS // use motors
+#define USE_MOTORS // use motors
 #define USE_USS // use ultrasonic sensor
-//#define USE_TOUCH // use touch sensor as emergency stop
-//#define USE_WIFI // use WiFi to connect to server
+#define USE_TOUCH // use touch sensor as emergency stop
+#define USE_WIFI // use WiFi to connect to server
 
 // --- INCLUDES -----------------------------------------------------------------------------------
 #include <Arduino.h>
