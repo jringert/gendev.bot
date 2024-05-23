@@ -22,7 +22,7 @@ public class RobotRunner {
 		Spectra, StateMachine, Aspect, Blockly
 	}
 
-	private static Engine engine = Engine.Spectra;
+	private static Engine engine = Engine.StateMachine;
 
 	/**
 	 * Starts the GUI, a webserver for the remote robot, and the selected engine

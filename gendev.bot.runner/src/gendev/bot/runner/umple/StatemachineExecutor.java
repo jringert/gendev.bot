@@ -3,7 +3,7 @@ package gendev.bot.runner.umple;
 import gendev.bot.runner.Executor;
 
 public class StatemachineExecutor extends Executor {
-	private static AbstractBot bot = new BotImpl();;
+	private static AbstractBot bot = new BotImpl();
 	private boolean prevWork = false;
 	private boolean prevEmgStop = false;
 
